@@ -1,0 +1,22 @@
+CC=cl
+CFLAGS=-DDEBUG
+
+all: iic.exe iicw.exe
+
+iic.exe: iic_pc.obj iic.obj main.obj
+#	$(CC) $(CFLAGS) iic.obj iic_pc.obj main.obj               # for Borland
+	$(CC) $(CFLAGS) iic.obj iic_pc.obj main.obj graphics.lib  # for MS C
+
+iicw.exe: iicw.obj iic_pc.obj iic.obj
+        $(CC) $(CFLAGS) iicw.obj iic.obj iic_pc.obj
+
+.c.obj:
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	del *.obj
+
+IIC_PC.obj : iic.h IIC_PC.C makefile
+IICW.obj : iic.h IICW.C makefile
+MAIN.obj : iic.h MAIN.C makefile
+IIC.obj : iic.h IIC.C makefile
